@@ -1,0 +1,234 @@
+@startuml Torrington
+
+package Controllers {
+
+    class TorringtonController {
+        +<<create>>TorringtonController(observers : ITorringtonObserver[])
+        + StartGame()
+        + NextTurn()
+        + EndGame()
+        + GetAcceptedProposals() : List<Proposal>
+        + AddProposal(proposal : Proposal)
+        + RemoveProposal(proposal : Proposal)
+        + GetProposals() : Proposal
+        + GetProposalCount() : int
+        + GetProposalLeft() : int
+    }
+
+    TorringtonController o-> "1\n- _game" .Models.Game : "modify >"
+    TorringtonController ..> .Models.Proposal: <<uses>>
+    TorringtonController ..> .Models.ITorringtonObserver: <<uses>>
+
+}
+
+package Models {
+
+    enum Field {
+        COMMERCE,
+        INGENIERIE,
+        STATISTIQUES,
+        INFORMATIQUE,
+        INDUSTRIE,
+        BIOLOGIE,
+        LOGISTIQUE,
+        CHIMIE,
+        ENVIRONNEMENT,
+        MECANIQUE,
+        ADMINISTRATION,
+        DROIT,
+        SOCIAL
+    }
+
+    class Game {
+        - _attractivenessRatio : double
+        - _successRatio : double
+        - _insertionRatio : double
+        - _year : int
+        + <<create>>Game(observers : ITorringtonObserver[])
+        + StartGame()
+        - setUpVariable()
+        + NextTurn()
+        - NotifyError(win : String, error : String)
+        + EndGame()
+        + GetAttractivenessRatio() : double
+        + GetSuccessRatio() : double
+        + GetInsertionRatio() : double
+        + GetSatisfactionRatio() : double
+        - calculateAttractiveness()
+        - calculateSuccess()
+        - calculateInsertion()
+        - calculateSatisfcation()
+        + NotifyNextTurn(year : int)
+        + NotifyRatioUpdated()
+        + NotifyEndGame()
+        + GetAcceptedProposals() : List<Proposal>
+        + AddProposal(proposal : Proposal)
+        + RemoveProposal(proposal : Proposal)
+        + GetProposals() : Proposal
+        + GetProposalCount() : int
+        + GetProposalLeft() : int
+
+    }
+    Game *-> "1..*\n - _observers" ITorringtonObserver : "owns >"
+    Game *-> "1\n - _university" University : "owns >"
+    Game *-> "1\n - _proposalGenerator" ProposalGenerator : "owns >"
+
+    class Proposal {
+        - _id : int
+        - _name : String
+        - _candidates : int
+        - _jobs : int
+        - _nbStudents : int
+        - _pcGraduated : int
+        - <<const>> MAX_STUDENTS : int = 100
+        - <<const>> MAX_GRADUATED = 100
+        + <<create>> Proposal(id : int, name : String, field : string, candidates : int, jobs :int)
+        + <<create>> Proposal()
+        + toString() : String
+        + GetId() : int
+        + GetName() : String
+        + GetCandidates() : int
+        + GetJobs() : int
+        + GetField() : Field
+        + SetStudents(nbStudents : int)
+        + GetStudent() : int
+        + GetStudentMax() : int
+        + SetGraduated(pcGraduated : int)
+        + GetGraduated() : int
+        + GetGraduatedMax() : int
+    }
+    Proposal *-> "1\n -_field" Field : "possess"
+    Proposal ..> Field : <<uses>>
+
+    class ProposalGenerator {
+        - _valuesToExclude : List<int>
+        - <<const>> TOTAL_PROPOSALS : int = 17
+        + <<create>> ProposalGenerator()
+        + GenerateProposal() : Proposal
+        + GetProposalCount() : int
+        + GetProposalLeft() : int
+        + GetTotalProposal() : int
+        + RemoveProposal(proposal : Proposal)
+    }
+    ProposalGenerator ..> Proposal : <<uses>>
+
+    interface ITorringtonObserver {
+        + ReactToRatioUpdated(ratios : double[])
+        + ReactToNextRound(year : int)
+        + ReactToEndGame(ratios : double[])
+        + ReactToError(win : String, error: String)
+    }
+
+    ITorringtonObserver *-> "1..*\n - _observers" Game
+
+    class University {
+        - _studentsCapacity : int
+        + <<create>> University()
+        + AddProposal(proposal : Proposal)
+        + RemoveProposal(proposal : Proposal)
+        + GetAcceptedProposals() : List<Proposal>
+    }
+    University ..> Proposal : <<uses>>
+    University *-> "0..*\n - _acceptedProposal" Proposal : "possess >"
+}
+
+package Views {
+    class ComputerScene {
+        + {override} _Ready()
+        - SetUpVariables()
+        + SetController(controller : TorringtonController)
+        + OnOffPressed()
+        + DisplayRandomProposal()
+        - BindProposalToUI(label : Label, acceptButton : Button, declineButton : Button, proposal : Proposal)
+        - ResetButtonConnections(button : Button)
+        - OnLabelClicked(@event : InputEvent, proposal : Proposal)
+        - OnProposalAccepted(proposal : Proposal, vbox : VBoxContainer)
+        - OnProposalRefused(proposal : Proposal, vbox : VBoxContainer)
+        - OnNextRoundCalled()
+        - ShowProposalDetails(proposal : Proposal)
+    }
+
+    ComputerScene o-> "0..3\n - _currentsProposals" .Models.Proposal : "owns >"
+    ComputerScene *-> "1\n - _cont" .Controllers.TorringtonController : "owns >"
+    ComputerScene ..> Proposal : <<uses>>
+
+    class EndGameScene {
+        + SetRatios(ratios : double[])
+        + OnMenuPressed()
+    }
+
+    EndGameScene *-> "1\n - _cont" .Controllers.TorringtonController : "owns >"
+
+    class GameScene {
+        + <<delegate>> NextRoundCalledEventHandler()
+        + <<delegate>> TabletButtonPressedEventHandler()
+        + {override} _Ready()
+        - LoadScene(sceneName : String, cont : TorringtonController) : Control
+        + OnTabletButtonPressed()
+        + OnComputerButtonPressed()
+        + OnOptionsButtonPressed()
+        + OnNextTurnButtonPressed()
+        + OnNextTurnValButtonPressed()
+        + OnEndGameButtonPressed()
+        + ReactToRatioUpdated(ratios : double[])
+        + ReactToNextRound(year : int)
+        + ReactToEndGame(ratios : double[])
+        + ReactToError(win : String, error: String)
+        + {override} ToString()
+    }
+
+    GameScene *-> "1\n - _cont" .Controllers.TorringtonController : "owns >"
+    GameScene o-> "1\n - _computerScene" ComputerScene : "call >"
+    GameScene o-> "1\n - _tabletScene" TabletScene : "call >"
+    GameScene o-> "1\n - _settingScene" SettingScene : "call >"
+    GameScene o-> "1\n - _endGameScene" EndGameScene : "call >"
+    GameScene ..> .Controllers.TorringtonController : <<uses>>
+    GameScene -|> ITorringtonObserver
+
+    class TabletScene {
+        + {override} _Ready()
+        + SetUpVariables()
+        + SetController(controller : TorringtonController)
+        - OnTabletButtonPressed()
+        - DisplayAcceptedProposal()
+        - CreateSlider(initialValue : int, maxValue : int, label : Label, proposal : Proposal, isStudentSlider : bool) : HSlider
+        - OnSliderChanged(lbl : Label , txt : String, newValue : int, isTablet : bool)
+        - ClearChildren(cont : Container)
+        - OnRemoveProposalPressed(proposal : Proposal)
+        + OnfOffButtonPressed()
+    }
+
+    TabletScene *-> "1\n - _cont" .Controllers.TorringtonController : "owns >"
+    TabletScene *-> "0..*\n - _acceptedProposal" .Models.Proposal : "possess >"
+    TabletScene ..> .Models.Proposal : <<uses>>
+
+    class SettingScene {
+       + {override} _Ready()
+       + OnQuitGameButtonPressed()
+       + OnResumeButtonPressed()
+       + OnRestartButtonPressed()
+       + OnIncreaseButtonPressed()
+       + OnDecreaseButtonPressed()
+       - UpdateMusicGauge()
+    }
+
+    class EndGameScene {
+        + SetRatios(ratios : double[])
+        + OnMenuPressed()
+    }
+
+    EndGameScene *-> "1\n - _cont" .Controllers.TorringtonController : "owns >"
+
+    class TitleScene {
+        + <<delegate>> StartButtonPressedEventHandler()
+        + {override} _Ready()
+        + OnStartButtonPressed()
+        + OnOptionsButtonPressed()
+        + OnExitButtonPressed()
+    }
+
+    TitleScene -.-> GameScene : "call >"
+    TitleScene -.-> SettingScene : "call >"
+
+}
+@enduml

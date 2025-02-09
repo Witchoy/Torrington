@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://65o88r334t6l"]
+
+[ext_resource type="FontFile" uid="uid://c3o3nvuq6bdxe" path="res://resources/Themes/Fonts/March Clean.ttf" id="1_6o7ge"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w135m"]
+bg_color = Color(0.305882, 0.266667, 0.643137, 1)
+
+[resource]
+default_font = ExtResource("1_6o7ge")
+Panel/styles/panel = SubResource("StyleBoxFlat_w135m")

@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://boxg41xv6oh0v"]
+
+[ext_resource type="Texture2D" uid="uid://bfon5m1jlp5ri" path="res://resources/assets/png/boutons/violet.png" id="1_p5vxc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uqqlm"]
+texture = ExtResource("1_p5vxc")
+
+[resource]
+AcceptDialog/styles/panel = SubResource("StyleBoxTexture_uqqlm")

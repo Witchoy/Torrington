@@ -1,0 +1,212 @@
+[gd_scene load_steps=17 format=3 uid="uid://dcgeunjevf1h2"]
+
+[ext_resource type="Script" path="res://Scripts/Views/ComputerScene.cs" id="1_vm8qx"]
+[ext_resource type="Theme" uid="uid://c3bwf3prrqydd" path="res://resources/Themes/GameOption.tres" id="2_biwne"]
+[ext_resource type="Theme" uid="uid://bn3jmiqqiyawr" path="res://resources/Themes/buttonBleu.tres" id="3_agr5d"]
+[ext_resource type="FontFile" uid="uid://c3o3nvuq6bdxe" path="res://resources/Themes/Fonts/March Clean.ttf" id="4_833mk"]
+[ext_resource type="AudioStream" uid="uid://xcxxoap0mcg6" path="res://resources/assets/sounds/button_sound.mp3" id="5_01n1e"]
+[ext_resource type="FontFile" uid="uid://c24d8tcflaqna" path="res://resources/Themes/Fonts/RIMONS.ttf" id="5_fll63"]
+[ext_resource type="Theme" uid="uid://do46u1m4g0wqu" path="res://resources/Themes/buttonJaune.tres" id="6_y4rqg"]
+[ext_resource type="Texture2D" uid="uid://dj6rnrmgtve6s" path="res://resources/assets/png/boutons/vert petit hover.png" id="7_tut6r"]
+[ext_resource type="Texture2D" uid="uid://bposmuk58n3ap" path="res://resources/assets/png/boutons/vert petit normal.png" id="8_jie6v"]
+[ext_resource type="Texture2D" uid="uid://ciyrxupng1qgo" path="res://resources/assets/png/boutons/vert petit clic.png" id="9_2hioq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dm4s3"]
+bg_color = Color(0.411765, 0.784314, 1, 1)
+
+[sub_resource type="Theme" id="Theme_1kmc1"]
+Panel/styles/panel = SubResource("StyleBoxFlat_dm4s3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ksvbr"]
+texture = ExtResource("7_tut6r")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mutau"]
+texture = ExtResource("8_jie6v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_55x3q"]
+texture = ExtResource("9_2hioq")
+
+[sub_resource type="Theme" id="Theme_1uv3a"]
+Button/styles/hover = SubResource("StyleBoxTexture_ksvbr")
+Button/styles/normal = SubResource("StyleBoxTexture_mutau")
+Button/styles/pressed = SubResource("StyleBoxTexture_55x3q")
+
+[node name="computerScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vm8qx")
+
+[node name="bottomPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_top = 825.0
+offset_right = 1600.0
+offset_bottom = 900.0
+theme = ExtResource("2_biwne")
+
+[node name="offButton" type="Button" parent="bottomPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 91.0
+offset_bottom = 60.0
+theme = ExtResource("3_agr5d")
+theme_override_fonts/font = ExtResource("4_833mk")
+theme_override_font_sizes/font_size = 20
+text = "Quitter
+"
+
+[node name="leftPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 825.0
+theme = SubResource("Theme_1kmc1")
+
+[node name="leftLabel" type="Label" parent="leftPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -262.0
+offset_top = 18.0
+offset_right = 210.0
+offset_bottom = 123.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.811765, 0.0196078, 1)
+theme_override_colors/font_shadow_color = Color(0.344076, 0.344076, 0.344076, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("4_833mk")
+theme_override_font_sizes/font_size = 50
+text = "Liste des formations proposées"
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="VBoxProposal1" type="VBoxContainer" parent="leftPanel"]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 156.0
+offset_right = 365.0
+offset_bottom = 248.0
+
+[node name="labelProposal1" type="Label" parent="leftPanel/VBoxProposal1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.305882, 0.266667, 0.643137, 1)
+theme_override_fonts/font = ExtResource("5_fll63")
+theme_override_font_sizes/font_size = 20
+text = "Formation 1"
+
+[node name="hboxButtons1" type="HBoxContainer" parent="leftPanel/VBoxProposal1"]
+layout_mode = 2
+
+[node name="declineButton1" type="Button" parent="leftPanel/VBoxProposal1/hboxButtons1"]
+layout_mode = 2
+theme = ExtResource("6_y4rqg")
+text = "refuser"
+
+[node name="acceptButton1" type="Button" parent="leftPanel/VBoxProposal1/hboxButtons1"]
+layout_mode = 2
+theme = SubResource("Theme_1uv3a")
+text = "Accepter
+"
+
+[node name="VBoxProposal2" type="VBoxContainer" parent="leftPanel"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 310.0
+offset_right = 365.0
+offset_bottom = 402.0
+
+[node name="labelProposal2" type="Label" parent="leftPanel/VBoxProposal2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.305882, 0.266667, 0.643137, 1)
+theme_override_fonts/font = ExtResource("5_fll63")
+theme_override_font_sizes/font_size = 20
+text = "Formation 2"
+
+[node name="hboxButtons2" type="HBoxContainer" parent="leftPanel/VBoxProposal2"]
+layout_mode = 2
+
+[node name="declineButton2" type="Button" parent="leftPanel/VBoxProposal2/hboxButtons2"]
+layout_mode = 2
+theme = ExtResource("6_y4rqg")
+text = "refuser
+"
+
+[node name="acceptButton2" type="Button" parent="leftPanel/VBoxProposal2/hboxButtons2"]
+layout_mode = 2
+theme = SubResource("Theme_1uv3a")
+text = "Accepter"
+
+[node name="VBoxProposal3" type="VBoxContainer" parent="leftPanel"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 466.0
+offset_right = 366.0
+offset_bottom = 558.0
+
+[node name="labelProposal3" type="Label" parent="leftPanel/VBoxProposal3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.305882, 0.266667, 0.643137, 1)
+theme_override_fonts/font = ExtResource("5_fll63")
+theme_override_font_sizes/font_size = 20
+text = "Formation 3"
+
+[node name="hboxButtons3" type="HBoxContainer" parent="leftPanel/VBoxProposal3"]
+layout_mode = 2
+
+[node name="declineButton3" type="Button" parent="leftPanel/VBoxProposal3/hboxButtons3"]
+layout_mode = 2
+theme = ExtResource("6_y4rqg")
+text = "refuser
+"
+
+[node name="acceptButton3" type="Button" parent="leftPanel/VBoxProposal3/hboxButtons3"]
+layout_mode = 2
+theme = SubResource("Theme_1uv3a")
+text = "Accepter"
+
+[node name="rightPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 600.0
+offset_right = 1600.0
+offset_bottom = 825.0
+theme = ExtResource("2_biwne")
+
+[node name="rightTitle" type="Label" parent="rightPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -341.0
+offset_top = 45.0
+offset_right = 347.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.986752, 0.986752, 0.986752, 1)
+theme_override_colors/font_shadow_color = Color(0.158472, 0.158472, 0.158472, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("4_833mk")
+theme_override_font_sizes/font_size = 50
+text = "Contenu de la formation choisie"
+
+[node name="contentLabel" type="Label" parent="rightPanel"]
+layout_mode = 0
+offset_left = 258.0
+offset_top = 371.0
+offset_right = 763.0
+offset_bottom = 403.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_fll63")
+theme_override_font_sizes/font_size = 20
+text = "Veuillez cliquer sur une formation"
+horizontal_alignment = 1
+
+[node name="buttonSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_01n1e")
+volume_db = 10.0
+
+[connection signal="pressed" from="bottomPanel/offButton" to="." method="OnOffButtonPressed"]
+[connection signal="pressed" from="leftPanel/VBoxProposal3/hboxButtons3/acceptButton3" to="." method="OnProposalAccepted"]

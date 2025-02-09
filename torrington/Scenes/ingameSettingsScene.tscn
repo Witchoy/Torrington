@@ -1,0 +1,110 @@
+[gd_scene load_steps=4 format=3 uid="uid://bebbg434yabdr"]
+
+[ext_resource type="Script" path="res://Scripts/Views/SettingsScene.cs" id="1_3fww5"]
+[ext_resource type="Theme" uid="uid://bo6hr2djcutmc" path="res://resources/Themes/baseTheme.tres" id="1_4gw0t"]
+[ext_resource type="Theme" uid="uid://cjwo1ycj1d5qg" path="res://resources/Themes/CTThemes/bottomTheme.tres" id="2_n75fh"]
+
+[node name="settingsScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3fww5")
+
+[node name="backgroundPanel" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.364706)
+
+[node name="mainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_4gw0t")
+
+[node name="quitOptionButton" type="Button" parent="mainPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 654.0
+offset_right = 116.0
+offset_bottom = 704.0
+text = "Quitter Options"
+
+[node name="restartButton" type="Button" parent="mainPanel"]
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 654.0
+offset_right = 1260.0
+offset_bottom = 704.0
+text = "Rejouer
+"
+
+[node name="quitGameButton" type="Button" parent="mainPanel"]
+layout_mode = 0
+offset_left = 972.0
+offset_top = 654.0
+offset_right = 1147.0
+offset_bottom = 704.0
+text = "Quitter le jeu"
+
+[node name="musicPanel" type="Panel" parent="mainPanel"]
+layout_mode = 0
+offset_left = 332.0
+offset_top = 68.0
+offset_right = 932.0
+offset_bottom = 158.0
+theme = ExtResource("2_n75fh")
+
+[node name="optionLabel" type="Label" parent="mainPanel/musicPanel"]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 10.0
+offset_right = 404.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 30
+text = "Music volume"
+horizontal_alignment = 1
+
+[node name="decreaseButton" type="Button" parent="mainPanel/musicPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 40.0
+offset_bottom = 81.0
+text = "-"
+
+[node name="musicGauge" type="ProgressBar" parent="mainPanel/musicPanel"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 550.0
+offset_bottom = 80.0
+
+[node name="increaseButton" type="Button" parent="mainPanel/musicPanel"]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 50.0
+offset_right = 590.0
+offset_bottom = 81.0
+text = "+"
+
+[connection signal="pressed" from="mainPanel/quitOptionButton" to="." method="OnResumeButtonPressed"]
+[connection signal="pressed" from="mainPanel/restartButton" to="." method="OnRestartButtonPressed"]
+[connection signal="pressed" from="mainPanel/quitGameButton" to="." method="OnQuitGameButtonPressed"]
+[connection signal="pressed" from="mainPanel/musicPanel/decreaseButton" to="." method="OnDecreaseButtonPressed"]
+[connection signal="pressed" from="mainPanel/musicPanel/increaseButton" to="." method="OnIncreaseButtonPressed"]

@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cj4md2pp31jru"]
+
+[ext_resource type="FontFile" uid="uid://c3o3nvuq6bdxe" path="res://resources/Themes/Fonts/March Clean.ttf" id="1_son0d"]
+[ext_resource type="Texture2D" uid="uid://bq5lsi141jn2u" path="res://resources/assets/png/boutons/violet petit normal.png" id="2_kah20"]
+[ext_resource type="Texture2D" uid="uid://dksnd6foaik67" path="res://resources/assets/png/boutons/violet petit clic.png" id="3_uinm5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6mtw7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_no2mx"]
+texture = ExtResource("2_kah20")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qaudu"]
+texture = ExtResource("3_uinm5")
+
+[resource]
+Button/fonts/font = ExtResource("1_son0d")
+Button/styles/hover = SubResource("StyleBoxTexture_6mtw7")
+Button/styles/normal = SubResource("StyleBoxTexture_no2mx")
+Button/styles/pressed = SubResource("StyleBoxTexture_qaudu")
