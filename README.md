@@ -1,3 +1,4 @@
+September 2024 - December 2024
 # Torrington: A Serious Game
 
 _A university program selection simulator built with Godot and C#_
